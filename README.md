@@ -2,4 +2,4 @@
 
 A simple Node.js web scraper.
 
-**Technologies and Frameworks:** Node.js, Puppeteer
+**Technologies and Frameworks:** Node.js
