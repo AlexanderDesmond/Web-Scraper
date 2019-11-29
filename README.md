@@ -1,2 +1,5 @@
 # Web-Scraper
-A simple web scraper
+
+A simple Node.js web scraper.
+
+**Technologies and Frameworks:** Node.js
