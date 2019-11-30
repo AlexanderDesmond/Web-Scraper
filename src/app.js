@@ -14,7 +14,7 @@ const puppeteer = require("puppeteer");
       coverImage => coverImage.src
     )
   );
-  console.log(coverImages);
+  //console.log(coverImages);
 
   // Return an array of the books' ratings
   const ratings = await page.evaluate(() =>
@@ -40,13 +40,13 @@ const puppeteer = require("puppeteer");
         }
       })
   );
-  console.log(ratings);
+  //console.log(ratings);
 
   // Return an array of the books' titles
   const titles = await page.evaluate(() =>
     Array.from(document.querySelectorAll("h3")).map(title => title.innerText)
   );
-  console.log(titles);
+  //console.log(titles);
 
   // Return an array of the books' prices
   const prices = await page.evaluate(() =>
@@ -54,7 +54,7 @@ const puppeteer = require("puppeteer");
       price => price.innerText
     )
   );
-  console.log(prices);
+  //console.log(prices);
 
   // Return an array of the books; availability
   const stock = await page.evaluate(() =>
@@ -62,7 +62,25 @@ const puppeteer = require("puppeteer");
       price.innerText.trim()
     )
   );
-  console.log(stock);
+  //console.log(stock);
+
+  // Create and return an array of Books
+  function buildCatalogue() {
+    const books = [];
+    // Build each book object
+    for (let i = 0; i < titles.length; i++) {
+      let book = {
+        cover: coverImages[i],
+        rating: ratings[i],
+        title: titles[i],
+        price: prices[i],
+        availability: stock[i]
+      };
+      books.push(book);
+    }
+    return books;
+  }
+  console.log(buildCatalogue());
 
   await browser.close();
 })();
