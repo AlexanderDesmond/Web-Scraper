@@ -101,31 +101,5 @@ const puppeteer = require("puppeteer");
   );
   //console.log(stock);
 
-  /*
-  const nextPage = (url) => {
-    const page = await browser.newPage();
-  }
-  */
-
-  /*
-  // Create and return an array of Books
-  function buildCatalogue() {
-    const books = [];
-    // Build each book object
-    for (let i = 0; i < titles.length; i++) {
-      let book = {
-        cover: coverImages[i],
-        rating: ratings[i],
-        title: titles[i],
-        price: prices[i],
-        availability: stock[i]
-      };
-      books.push(book);
-    }
-    return books;
-  }
-  console.log(buildCatalogue());
-  */
-
   await browser.close();
 })();
