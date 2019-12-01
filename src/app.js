@@ -8,6 +8,43 @@ const puppeteer = require("puppeteer");
   await page.goto(url);
   await page.waitFor(1000);
 
+  // Build an array of Book objects from books.toscrape.com
+  try {
+    const buildBooks = await page.evaluate(() =>
+      Array.from(document.querySelectorAll(".product_pod")).map(compact => ({
+        title: compact.querySelector("h3").innerText.trim(),
+        cover: compact.querySelector(".image_container img").src,
+        price: compact.querySelector(".price_color").innerText,
+        rating: compact.querySelector(".star-rating").className.split(" ")[1],
+        availability: compact.querySelector(".instock").innerText.trim()
+      }))
+    );
+    console.log(buildBooks);
+  } catch (error) {
+    console.log("Error message: " + error);
+  }
+
+  // Helper function to convert ratings in text to numbers
+  function ratingConverter(rating) {
+    switch (rating) {
+      case "One":
+        return 1;
+        break;
+      case "Two":
+        return 2;
+        break;
+      case "Three":
+        return 3;
+        break;
+      case "Four":
+        return 4;
+        break;
+      case "Five":
+        return 5;
+        break;
+    }
+  }
+
   // Return an array of links to the books' cover images
   const coverImages = await page.evaluate(() =>
     Array.from(document.querySelectorAll(".image_container img")).map(
@@ -64,6 +101,13 @@ const puppeteer = require("puppeteer");
   );
   //console.log(stock);
 
+  /*
+  const nextPage = (url) => {
+    const page = await browser.newPage();
+  }
+  */
+
+  /*
   // Create and return an array of Books
   function buildCatalogue() {
     const books = [];
@@ -81,6 +125,7 @@ const puppeteer = require("puppeteer");
     return books;
   }
   console.log(buildCatalogue());
+  */
 
   await browser.close();
 })();
