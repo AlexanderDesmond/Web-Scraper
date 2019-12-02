@@ -11,16 +11,23 @@ const puppeteer = require("puppeteer");
     await page.goto(url);
     await page.waitFor(".product_pod");
 
-    // Handle the pagination and return an array of all Book objects
+    // Handle the pagination and
+    // return an array of all Book objects
     async function getBooks() {
+      // Get number of books on the site
+      const numBooks = await page.evaluate(
+        () => document.querySelector(".form-horizontal > strong").innerText
+      );
+
+      // Get the books from the first page.
       let books = await buildBooks(page);
 
+      // Get the books from the other pages.
       do {
         let nextBtn = await page.$(".next > a");
         if (nextBtn) {
           await nextBtn.click();
           await page.waitForNavigation({ waitUntil: "networkidle0" });
-          console.log(page.url());
         } else {
           break;
         }
@@ -28,7 +35,7 @@ const puppeteer = require("puppeteer");
         let newBooks = await buildBooks(page);
 
         books = [...books, ...newBooks];
-      } while (books.length < 50);
+      } while (books.length < numBooks);
 
       return books;
     }
