@@ -55,19 +55,6 @@ const puppeteer = require("puppeteer");
       return makeBooks;
     }
 
-    // Build an array of Book objects from books.toscrape.com
-    /*
-    const buildBooks = await page.evaluate(() =>
-      Array.from(document.querySelectorAll(".product_pod")).map(compact => ({
-        title: compact.querySelector("h3").innerText.trim(),
-        cover: compact.querySelector(".thumbnail").src,
-        price: compact.querySelector(".price_color").innerText,
-        rating: compact.querySelector(".star-rating").className.split(" ")[1],
-        availability: compact.querySelector(".instock").innerText.trim()
-      }))
-    );
-    */
-
     //await getBooks();
     console.log(await getBooks());
 
