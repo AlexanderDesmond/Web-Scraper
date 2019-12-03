@@ -32,8 +32,9 @@ const puppeteer = require("puppeteer");
           break;
         }
 
+        // Get books from the current page
         let newBooks = await buildBooks(page);
-
+        // Combine them with the books from previous pages
         books = [...books, ...newBooks];
       } while (books.length < numBooks);
 
@@ -43,23 +44,23 @@ const puppeteer = require("puppeteer");
     // Build and return an array of Book objects.
     async function buildBooks(pages) {
       // Build an array of Book objects from a given page.
-      const makeBooks = await pages.evaluate(() =>
+      const makeBooks = await pages.evaluate(() => {
         Array.from(document.querySelectorAll(".product_pod")).map(compact => ({
           title: compact.querySelector("h3").innerText.trim(),
           cover: compact.querySelector(".thumbnail").src,
           price: compact.querySelector(".price_color").innerText,
           rating: compact.querySelector(".star-rating").className.split(" ")[1],
           availability: compact.querySelector(".instock").innerText.trim()
-        }))
-      );
+        }));
+      });
       return makeBooks;
     }
 
-    //await getBooks();
-    console.log(await getBooks());
+    await getBooks();
+    //console.log(await getBooks());
 
     // Helper function to convert ratings in text to numbers
-    function ratingConverter(rating) {
+    const ratingConverter = rating => {
       switch (rating) {
         case "One":
           return 1;
@@ -76,8 +77,10 @@ const puppeteer = require("puppeteer");
         case "Five":
           return 5;
           break;
+        default:
+          return 0;
       }
-    }
+    };
 
     // Close the headless browser
     await browser.close();
