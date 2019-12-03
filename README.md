@@ -1,6 +1,6 @@
 # Web-Scraper
 
-A simple Node.js web scraper to scrape book data from <http://books.toscrape.com/> using Puppeteer.
+A simple Node.js web scraper to scrape book data from [books.toscrape.com](http://books.toscrape.com/) using Puppeteer.
 
 Uses a headless instance of Chromium via Puppeteer.
 
