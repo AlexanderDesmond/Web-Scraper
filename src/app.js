@@ -4,7 +4,7 @@ const puppeteer = require("puppeteer");
   try {
     // Set up a headless Chrome instance
     const browser = await puppeteer.launch({
-      headless: false
+      //headless: false
     });
     const page = await browser.newPage();
     const url = "http://books.toscrape.com/"; // Website to scrape data from
